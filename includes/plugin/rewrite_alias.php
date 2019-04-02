@@ -19,8 +19,9 @@ if(strpos($get_url,'sitemap-')){
 	$sitemap  = explode('.',$array_url[1]);
 	$_GET[NV_NAME_VARIABLE] = $sitemap[1];
 	$_GET[NV_OP_VARIABLE] = 'sitemap';
-}elseif(strpos($get_url,'index.php?')){
+}elseif(strpos($get_url,'index.php?') && strpos($get_url,'admin/index.php?') != true){
 	$array_url = explode('?',$get_url);
+	//print_r($_SERVER['REDIRECT_QUERY_STRING']);
 	if($array_url[1] == $_SERVER['REDIRECT_QUERY_STRING']){
 		if(strpos($get_url,'language=')){
 			$request= explode('&',$_SERVER['REDIRECT_QUERY_STRING']);

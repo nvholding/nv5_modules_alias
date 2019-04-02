@@ -230,6 +230,11 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
+			$file_module_string_find = "\$item['link'] = \$global_array_cat[\$catid_i]['link'] . '/' . \$item['alias'] . '-' . \$item['id'] . \$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$item['link'] = \$item['alias'];//\$item['link'] = \$global_array_cat[\$catid_i]['link'] . '/' . \$item['alias'] . '-' . \$item['id'] . \$global_config['rewrite_exturl'];";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
 			$file_module_string_find = "\$item['link'] = \$global_array_cat[\$catid]['rewrite_link'] . '/' . \$item['alias'] . \$global_config['rewrite_exturl'];";
 			$file_module_string_remplace = "\$item['link'] = \$item['alias'];//\$item['link'] = \$global_array_cat[\$catid]['rewrite_link'] . '/' . \$item['alias'] . \$global_config['rewrite_exturl'];";
 			if(strpos($file_module_content,$file_module_string_find)){
@@ -312,35 +317,31 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 					}
 				}
 			}
-			/*
-			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/functions.php';
-						$file_module_content = @file_get_contents($file_module);
-						$file_module_string_find = "krsort(\$array_mod_title, SORT_NUMERIC);";
-						$file_module_string_remplace = "krsort(\$array_mod_title, SORT_NUMERIC);}";
-						if(strpos($file_module_content,$file_module_string_remplace) != true){
-							if(strpos($file_module_content,$file_module_string_find)){
-								$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
-							}
-							if (! empty($file_module) and ! empty($file_module_content)) {
-								try {
-									$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
-									if (empty($filesize)) {
-										$return = false;
-									}
-								} catch (exception $e) {
-									$return = false;
-								}
-							}
-						}*/
+			
 			
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/funcs/detail.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . \$module_name . '&' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$news_contents['catid']]['alias'] . '/' . \$news_contents['alias'] . '-' . \$news_contents['id'] . \$global_config['rewrite_exturl'], true);";
-			$file_module_string_remplace = "\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . \$news_contents['alias'], true);//\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . \$module_name . '&' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$news_contents['catid']]['alias'] . '/' . \$news_contents['alias'] . '-' . \$news_contents['id'] . \$global_config['rewrite_exturl'], true);";
+			$file_module_string_remplace = "\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . \$news_contents['alias'] . \$global_config['rewrite_exturl'], true);//\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . \$module_name . '&' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$news_contents['catid']]['alias'] . '/' . \$news_contents['alias'] . '-' . \$news_contents['id'] . \$global_config['rewrite_exturl'], true);";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
-			
+			$file_module_string_find = "\$link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] . \$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$link = NV_BASE_SITEURL . \$row['alias'] . \$global_config['rewrite_exturl'];//\$link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] . \$global_config['rewrite_exturl'];";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$row['catid']]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] .\$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$link = NV_BASE_SITEURL . \$row['alias'] . \$global_config['rewrite_exturl'];//\$link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$row['catid']]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] .\$global_config['rewrite_exturl'];";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$topiclink = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$module_info['alias']['topic'] . '/' . \$topic_alias;";
+			$file_module_string_remplace = "\$topiclink = NV_BASE_SITEURL . \$topic_alias . \$global_config['rewrite_exturl'];//\$topiclink = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$module_info['alias']['topic'] . '/' . \$topic_alias;";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$topiclink = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $module_info['alias']['topic'] . '/' . $topic_alias;
 			if (! empty($file_module) and ! empty($file_module_content)) {
 				try {
 					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
@@ -354,7 +355,7 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/funcs/sitemap.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
-			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias, true),//'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
+			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias . \$global_config['rewrite_exturl'], true),//'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
@@ -373,7 +374,7 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/rssdata.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "\$value['link'] = NV_BASE_SITEURL . \"index.php?\" . NV_LANG_VARIABLE . \"=\" . NV_LANG_DATA . \"&amp;\" . NV_NAME_VARIABLE . \"=\" . \$mod_name . \"&amp;\" . NV_OP_VARIABLE . \"=\" . \$mod_info['alias']['rss'] . \"\/\" . \$value['alias'];";
-			$file_module_string_remplace = "\$value['link'] = nv_url_rewrite(NV_BASE_SITEURL . \$value['alias'], true);//\$value['link'] = NV_BASE_SITEURL . \"index.php?\" . NV_LANG_VARIABLE . \"=\" . NV_LANG_DATA . \"&amp;\" . NV_NAME_VARIABLE . \"=\" . \$mod_name . \"&amp;\" . NV_OP_VARIABLE . \"=\" . \$mod_info['alias']['rss'] . \"\/\" . \$value['alias'];";
+			$file_module_string_remplace = "\$value['link'] = nv_url_rewrite(NV_BASE_SITEURL . \$value['alias'] . \$global_config['rewrite_exturl'], true);//\$value['link'] = NV_BASE_SITEURL . \"index.php?\" . NV_LANG_VARIABLE . \"=\" . NV_LANG_DATA . \"&amp;\" . NV_NAME_VARIABLE . \"=\" . \$mod_name . \"&amp;\" . NV_OP_VARIABLE . \"=\" . \$mod_info['alias']['rss'] . \"\/\" . \$value['alias'];";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
@@ -388,13 +389,58 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 					$return = false;
 				}
 			}
-			 
+			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/theme.php';
+			$file_module_content = @file_get_contents($file_module);
+			$file_module_string_find = "\$xtpl->assign('LINK', \$global_array_cat[\$catid_i]['link'] . '/' . \$value['alias'] . "-" . \$value['id'] . \$global_config['rewrite_exturl']);";
+			$file_module_string_remplace = "\$xtpl->assign('LINK',\$value['alias']);//\$xtpl->assign('LINK', \$global_array_cat[\$catid_i]['link'] . '/' . \$value['alias'] . "-" . \$value['id'] . \$global_config['rewrite_exturl']);";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=tag/' . urlencode(\$value['alias']));";
+			$file_module_string_remplace = "\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . urlencode(\$value['alias']));//\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=tag/' . urlencode(\$value['alias']));";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			
+			if (! empty($file_module) and ! empty($file_module_content)) {
+				try {
+					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
+					if (empty($filesize)) {
+						$return = false;
+					}
+				} catch (exception $e) {
+					$return = false;
+				}
+			}
+			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/blocks/module.block_newscenter.php';
+			$file_module_content = @file_get_contents($file_module);
+			$file_module_string_find = "\$row['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$row['catid']]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] . \$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$row['link'] = \$row['alias'] . \$global_config['rewrite_exturl'];//\$row['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$row['catid']]['alias'] . '/' . \$row['alias'] . '-' . \$row['id'] . \$global_config['rewrite_exturl'];";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=tag/' . urlencode(\$value['alias']));";
+			$file_module_string_remplace = "\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . urlencode(\$value['alias']));//\$xtpl->assign('LINK_KEYWORDS', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=tag/' . urlencode(\$value['alias']));";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			
+			if (! empty($file_module) and ! empty($file_module_content)) {
+				try {
+					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
+					if (empty($filesize)) {
+						$return = false;
+					}
+				} catch (exception $e) {
+					$return = false;
+				}
+			}
 			//end site
 			//begin admin site
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/admin/main.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid_i]['alias'] . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
-			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias, true),//\'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid_i]['alias'] . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
+			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias . \$global_config['rewrite_exturl'], true),//\'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid_i]['alias'] . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
@@ -453,12 +499,12 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/funcs/main.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "\$base_url_rewrite = nv_url_rewrite(str_replace('&amp;', '&', \$base_url) . '&' . NV_OP_VARIABLE . '=' . \$rowdetail['alias'] . \$global_config['rewrite_exturl'], true);";
-			$file_module_string_remplace = "\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . \$rowdetail['alias'], true);//\$base_url_rewrite = nv_url_rewrite(str_replace('&amp;', '&', \$base_url) . '&' . NV_OP_VARIABLE . '=' . \$rowdetail['alias'] . \$global_config['rewrite_exturl'], true);";
+			$file_module_string_remplace = "\$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . \$rowdetail['alias'] . \$global_config['rewrite_exturl'], true);//\$base_url_rewrite = nv_url_rewrite(str_replace('&amp;', '&', \$base_url) . '&' . NV_OP_VARIABLE . '=' . \$rowdetail['alias'] . \$global_config['rewrite_exturl'], true);";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
 			$file_module_string_find = "\$_other['link'] = \$base_url . '&amp;' . NV_OP_VARIABLE . '=' . \$_other['alias'] . \$global_config['rewrite_exturl'];";
-			$file_module_string_remplace = "\$_other['link'] = nv_url_rewrite(NV_BASE_SITEURL . \$_other['alias'], true);//\$_other['link'] = \$base_url . '&amp;' . NV_OP_VARIABLE . '=' . \$_other['alias'] . \$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$_other['link'] = nv_url_rewrite(NV_BASE_SITEURL . \$_other['alias'] . \$global_config['rewrite_exturl'], true);//\$_other['link'] = \$base_url . '&amp;' . NV_OP_VARIABLE . '=' . \$_other['alias'] . \$global_config['rewrite_exturl'];";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
@@ -494,7 +540,7 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/funcs/sitemap.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
-			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias, true),//'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
+			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias . \$global_config['rewrite_exturl'], true),//'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$catalias . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
@@ -514,7 +560,7 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/admin/main.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "\$row['url_view'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$row['alias'] . \$global_config['rewrite_exturl'];";
-			$file_module_string_remplace = "\$row['url_view'] = nv_url_rewrite(NV_BASE_SITEURL . \$row['alias'], true);//\$row['url_view'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$row['alias'] . \$global_config['rewrite_exturl'];";
+			$file_module_string_remplace = "\$row['url_view'] = nv_url_rewrite(NV_BASE_SITEURL . \$row['alias'] . \$global_config['rewrite_exturl'], true);//\$row['url_view'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$row['alias'] . \$global_config['rewrite_exturl'];";
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
