@@ -1,0 +1,42 @@
+/**
+ * @Project NUKEVIET 4.x
+ * @Author Trung Nghĩa (trungnghiack@gmail.com)
+ * @Copyright (C) 2018 Trung Nghĩa. All rights reserved
+ * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+ * @Createdate Sat, 30 Jun 2018 12:44:38 GMT
+ */
+ 
+.detail_alias {
+    margin-bottom: 20px;
+}
+.des_alias {
+    margin-bottom: 20px;
+}
+.image_alias img {
+    width: 200px;
+}
+.title_alias {
+    color: red;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.image_alias {
+    margin-bottom: 10px;
+}
+.title_result {
+    padding: 10px;
+    font-weight: 700;
+    border-bottom: 1px solid #ccc;
+}
+ul.list_tags li {
+    margin-bottom: 10px;
+}
+ul.list_tags {
+    padding-left: 0px;
+}
+.title_list_tags {
+    color: black;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
