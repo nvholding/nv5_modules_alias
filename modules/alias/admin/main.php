@@ -114,7 +114,50 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			}
 			
 			// KẾT THÚC XÓA ALIAS
+			//begin site 
+			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/funcs/main.php';
+			$file_module_content = @file_get_contents($file_module);
+			$file_module_string_find = "'link_pro' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$alias,";
+			$file_module_string_remplace = "'link_pro' => NV_BASE_SITEURL . \$alias;//'link_pro' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$alias,";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name;";
+			$file_module_string_remplace = "\$base_url = NV_BASE_SITEURL . \$module_name;//\$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name;";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			if (! empty($file_module) and ! empty($file_module_content)) {
+				try {
+					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
+					if (empty($filesize)) {
+						$return = false;
+					}
+				} catch (exception $e) {
+					$return = false;
+				}
+			}
 			
+			//end site
+			//begin admin site
+			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/admin/main.php';
+			$file_module_content = @file_get_contents($file_module);
+			$file_module_string_find = "'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid_i]['alias'] . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
+			$file_module_string_remplace = "'link' => nv_url_rewrite(NV_BASE_SITEURL . \$alias . \$global_config['rewrite_exturl'], true),//\'link' => NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . \$module_name . '&amp;' . NV_OP_VARIABLE . '=' . \$global_array_cat[\$catid_i]['alias'] . '/' . \$alias . '-' . \$id . \$global_config['rewrite_exturl'],";
+			if(strpos($file_module_content,$file_module_string_find)){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			if (! empty($file_module) and ! empty($file_module_content)) {
+				try {
+					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
+					if (empty($filesize)) {
+						$return = false;
+					}
+				} catch (exception $e) {
+					$return = false;
+				}
+			}
+			//end admin site
 			
 		}
 		
@@ -341,7 +384,7 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
-			$topiclink = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $module_info['alias']['topic'] . '/' . $topic_alias;
+			
 			if (! empty($file_module) and ! empty($file_module_content)) {
 				try {
 					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
@@ -564,6 +607,44 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			if(strpos($file_module_content,$file_module_string_find)){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
+			if (! empty($file_module) and ! empty($file_module_content)) {
+				try {
+					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
+					if (empty($filesize)) {
+						$return = false;
+					}
+				} catch (exception $e) {
+					$return = false;
+				}
+			}
+			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/admin/content.php';
+			$file_module_content = @file_get_contents($file_module);
+			$file_module_string_find = "\$groups_list = nv_groups_list();";
+			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\TMS\Checkalias;";
+			if(strpos($file_module_content,'\$check_alias = new NukeViet\TMS\Checkalias;') == 0){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$groups_list = nv_groups_list();";
+			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\TMS\Checkalias;";
+			if(strpos($file_module_content,"\$check_return = \$check_alias->check_id_alias(\$id, \$row['alias']);") == 0){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "if (empty(\$row['title'])) {";
+			$file_module_string_remplace = "if(\$check_alias->check == 1){ \$error = 'alias bị trùng'; }elseif (empty(\$row['title'])) {";
+			if(strpos($file_module_content,"if(\$check_alias->check == 1){ \$error = 'alias bị trùng'; }elseif (empty(\$row['title'])) {") == 0){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "if (\$sth->rowCount()) {";
+			$file_module_string_remplace = "if (\$sth->rowCount()) {\n if(\$id == 0) \$id_page = \$db->lastInsertId(); else \$id_page = \$id;\n \$check_alias->add_alias_page(\$id_page, \$row['alias'], \$module_name, 'main');";
+			if(strpos($file_module_content,"\$check_alias->add_alias_page(\$id_page, \$row['alias'], \$module_name, 'main');") == 0){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			$file_module_string_find = "\$xtpl->parse('main');";
+			$file_module_string_remplace = "\$list_tag_news = \$check_alias->list_tags();\n \$array_tag_new = explode(',',\$row['keywords']);\n foreach(\$list_tag_news as \$tag){\n if(in_array(\$tag['id'],\$array_tag_new)) \$xtpl->assign('selected_tag', 'selected=selected'); else \$xtpl->assign('selected_tag', '');\n \$xtpl->assign('tag', \$tag);\n \$xtpl->parse('main.tag');}\n \$xtpl->parse('main');";
+			if(strpos($file_module_content,"\$list_tag_news = \$check_alias->list_tags();") == 0){
+				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
+			}
+			
 			if (! empty($file_module) and ! empty($file_module_content)) {
 				try {
 					$filesize = file_put_contents($file_module, $file_module_content, LOCK_EX);
