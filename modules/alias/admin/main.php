@@ -620,12 +620,12 @@ if( $nv_Request->isset_request( 'mod_file', 'get' ) )
 			$file_module = NV_ROOTDIR . '/modules/' . $mod_file . '/admin/content.php';
 			$file_module_content = @file_get_contents($file_module);
 			$file_module_string_find = "\$groups_list = nv_groups_list();";
-			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\TMS\Checkalias;";
+			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\Alias\Checkalias;";
 			if(strpos($file_module_content,'\$check_alias = new NukeViet\TMS\Checkalias;') == 0){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
 			$file_module_string_find = "\$groups_list = nv_groups_list();";
-			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\TMS\Checkalias;";
+			$file_module_string_remplace = "\$groups_list = nv_groups_list();\n \$check_alias = new NukeViet\Alias\Checkalias;";
 			if(strpos($file_module_content,"\$check_return = \$check_alias->check_id_alias(\$id, \$row['alias']);") == 0){
 				$file_module_content = str_replace($file_module_string_find,$file_module_string_remplace,$file_module_content);
 			}
